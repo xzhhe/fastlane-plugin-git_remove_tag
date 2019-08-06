@@ -1,3 +1,6 @@
 lane :test do
-  git_remove_tag
+  git_remove_tag(
+    workspace: '/Users/xiongzenghui/Desktop/git_demo',
+    tag: 'v9.9.9'
+  )
 end

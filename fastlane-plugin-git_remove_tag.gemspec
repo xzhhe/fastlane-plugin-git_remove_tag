@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.email         = 'zxcvb1234001@163.com'
 
   spec.summary       = 'remove git origin and remote repo tag'
-  # spec.homepage      = "https://github.com/<GITHUB_USERNAME>/fastlane-plugin-git_remove_tag"
+  spec.homepage      = 'https://github.com/xzhhe/fastlane-plugin-git_remove_tag'
   spec.license       = "MIT"
 
   spec.files         = Dir["lib/**/*"] + %w(README.md LICENSE)

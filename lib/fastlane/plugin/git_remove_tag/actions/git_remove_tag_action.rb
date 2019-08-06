@@ -5,7 +5,19 @@ module Fastlane
   module Actions
     class GitRemoveTagAction < Action
       def self.run(params)
-        UI.message("The git_remove_tag plugin is working!")
+        workspace = params[:workspace]
+        tag = params[:tag]
+        remove_local = params[:remove_local]
+        remove_remote = params[:remove_remote]
+
+        cmds = [
+          "cd #{workspace}",
+          ("git tag -d #{tag}" if remove_local),
+          ("git push origin :#{tag}" if remove_remote)
+        ].compact
+        Actions.sh(cmds.join(';'))
+        UI.message("git remove tag #{tag} SUCCESS ✅")
+        true
       end
 
       def self.description
@@ -21,25 +33,39 @@ module Fastlane
       end
 
       def self.details
-        # Optional:
         "remove git origin and remote repo tag"
       end
 
       def self.available_options
         [
-          # FastlaneCore::ConfigItem.new(key: :your_option,
-          #                         env_name: "GIT_REMOVE_TAG_YOUR_OPTION",
-          #                      description: "A description of your option",
-          #                         optional: false,
-          #                             type: String)
+          FastlaneCore::ConfigItem.new(
+            key: :workspace,
+            description: "where are you git repo dir ???",
+            optional: false
+          ),
+          FastlaneCore::ConfigItem.new(
+            key: :tag,
+            description: "what tag did you want to remove ???",
+            optional: false
+          ),
+          FastlaneCore::ConfigItem.new(
+            key: :remove_local,
+            description: "did you remove <local> tag ???",
+            optional: true,
+            is_string: false,
+            default_value: true
+          ), 
+          FastlaneCore::ConfigItem.new(
+            key: :remove_remote,
+            description: "did you remove <remote> tag ???",
+            optional: true,
+            is_string: false,
+            default_value: true
+          ) 
         ]
       end
 
       def self.is_supported?(platform)
-        # Adjust this if your plugin only works for a particular platform (iOS vs. Android, for example)
-        # See: https://docs.fastlane.tools/advanced/#control-configuration-by-lane-and-by-platform
-        #
-        # [:ios, :mac, :android].include?(platform)
         true
       end
     end
