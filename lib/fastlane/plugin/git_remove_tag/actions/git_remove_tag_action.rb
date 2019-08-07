@@ -65,6 +65,10 @@ module Fastlane
         ]
       end
 
+      def self.category
+        :source_control
+      end
+
       def self.is_supported?(platform)
         true
       end
